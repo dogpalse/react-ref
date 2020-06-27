@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React ref
+-----
+보통의 html에서는 특정 요소에 특정 작업을 하기 위해 요소에 id라는 프로퍼티를 준다. 리액트에서는 id와 비슷한 기능을 하는 ref라는 기능이 있다.
+리액트에서 id를 기능을 막지는 않지만 권하지 않는다. 같은 컴포넌트를 반복해서 사용할 경우 id 값이 중복 될 수 있는데 id 값은 유일해야 한다는 특성에 위반될 수 있다. 이러한 이유로 리액트에서는 id를 쓴느 것을 권하지 않는다.
 
-## Available Scripts
+### 1. ref를 써야하는 상황
+DOM을 직접 접근해야 할 경우에 ref를 사용한다.
 
-In the project directory, you can run:
+### 2. ref 사용
+1. 콜백함수를 사용하여 ref 설정
+ref를 달고자 하는 요소에 ref라는 콜백함수를 props로 전달(ref를 파라미터로 받는 콜백함수)
+```javascript
+<input ref={(ref) => {this.input = ref}}>
+```
 
-### `npm start`
+2. createRef를 사용해서 ref 설정
+ - 컴포넌트 내부에 맴버 변수로 React.createRef()를 담는다.
+ - 해당 멤버 변수를 ref를 달고자 하는 요소에 ref props로 넣어준다.
+```javascript
+const input = React.createRef();
+const handleFocus = () => {
+    this.input.current.focus();
+}
+reder() {
+    return (
+        <input ref={this.handleFocus} />
+    )
+}
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### 3. 컴포넌트에서 ref 달기
+컴포넌트 내부에 있는 DOM을 컴포넌트 외부에서 접근할 때 사용한다.
+```javascript
+<Comopnent ref={(ref) => this.component = ref}>
+```
